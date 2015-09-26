@@ -1,0 +1,25 @@
+.stat-screen {
+  &-wrap {
+    color: white;
+    position: absolute;
+    top: 20px;
+    right: 25px;
+  }
+
+  &-list {
+    list-style: none;
+  }
+
+  &-item {
+    &-name {
+      width: 70px;
+      display: inline-block;
+    }
+
+    &-value {
+      display: inline-block;
+      width: 60px;
+      overflow: hidden;
+    }
+  }
+}
