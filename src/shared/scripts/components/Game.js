@@ -24,6 +24,10 @@ class Main  extends Component {
     
     game.init(ctx);
     game.start();
+    this.setGame(game);
+  }
+
+  setGame(game) {
     this.setState({game});
   }
 

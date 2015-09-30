@@ -2,6 +2,7 @@
 
 import _                              from 'lodash';
 import React, { Component,PropTypes } from 'react';
+import ReactDOM                       from 'react-dom';
 
 class Canvas extends Component {  
 
@@ -29,7 +30,7 @@ class Canvas extends Component {
   }
   
   _resizeCanvas = () => {
-    let canvas = React.findDOMNode(this.refs.canvas);
+    let canvas = ReactDOM.findDOMNode(this.refs.canvas);
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     if(_.isFunction(this.props.onResize)) {
@@ -38,7 +39,7 @@ class Canvas extends Component {
   }
 
   getCanvasContext(type) {
-    let canvas = React.findDOMNode(this.refs.canvas); 
+    let canvas = ReactDOM.findDOMNode(this.refs.canvas); 
     return canvas.getContext(type || '2d');
   }
 

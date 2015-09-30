@@ -1,9 +1,10 @@
 'use strict';
 
-import React from 'react';
-import Router from 'react-router';
-import Routes from '../shared/scripts/router/Routes';
+import React                from 'react';
+import ReactDOM             from 'react-dom';
+import Router               from 'react-router';
+import Routes               from '../shared/scripts/router/ClientRoutes';
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 
-Router.run(Routes, Router.HistoryLocation, (Handler/*, state*/) => {
-  React.render(<Handler />, document.body);
-});
+let history = createBrowserHistory();
+ReactDOM.render(<Router history={history}>{Routes}</Router>, document.getElementById('react-app'));
