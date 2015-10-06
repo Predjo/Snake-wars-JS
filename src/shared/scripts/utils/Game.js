@@ -29,8 +29,6 @@ class Game {
     this.collectibleManager = new CollectibleManager();
     this.serverManager = new ServerManager();
     this.serverManager.connect();
-    //this.objectManager.registerPlayer(this.player);
-    //this.stats.trackPlayer(this.player);
     this.defineControls();
     this.defineEvents();
   }

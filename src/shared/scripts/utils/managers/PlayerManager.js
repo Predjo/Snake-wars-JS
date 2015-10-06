@@ -17,11 +17,16 @@ class PlayerManager {
       instance = this;
       this.defineEvents();
     }
-    this.players = [];
-    this.playerCount = 0;
+
+    this.setDefaults();
     this.serverManager = new ServerManager();
 
     return instance;
+  }
+
+  setDefaults() {
+    this.players = [];
+    this.playerCount = 0;   
   }
 
   defineEvents() {
@@ -36,6 +41,10 @@ class PlayerManager {
     EventManager.on(Events.currentPlayerCreated, (player) => {
       this.addPlayer(player);
     });
+
+    EventManager.on(Events.resetAll, () => {
+      this.setDefaults();
+    });    
   }
 
   addPlayer(player) {
@@ -111,11 +120,11 @@ class PlayerManager {
   }
 
   getState () {
-    return _.map(this.players, (player) => {return player.getState()});
+    return _.map(this.players, player => {return player.getState()});
   }
 
   updatePlayers(timestamp) {
-    _.each(this.players, (player) => {
+    _.each(this.players, player => {
       if (player.canMove(timestamp)) {
         player.move(timestamp);
       }

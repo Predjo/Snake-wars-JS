@@ -30,7 +30,7 @@ class ClientManager {
   removeClient (client) {
     _.remove(this.clients, (item) => {
       if(client === item) {
-        EventManager.trigger(Events.playerDestroyed, client.getPlayer());
+        EventManager.trigger(Events.playerDestroyed, client.getPlayer().uid);
         return true;
       }
     });
@@ -86,6 +86,7 @@ class ClientManager {
           let player = client.getPlayer();
           let {uid, name, color} = player;
           console.log(`Player left, uid: ${uid} name: ${name} color: ${color}`);
+          this.socket.emit('playerDestroy', player.getState());
           this.removeClient(client);
         } else {
           console.error('Client undefined');

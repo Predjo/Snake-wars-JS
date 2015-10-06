@@ -12,13 +12,24 @@ class Login extends Component {
 
   componentDidMount() {}
 
+  setPlayerName(event) {
+    this.setState({
+      playerName: event.target.value
+    });
+  }
+
   render() {
 
     return (
       <div className='login-wrap'>
-        <span>Hello welcome to Snake Wars. Click </span>
-        <Link to="/game">this</Link>
-        <span> to start.</span>
+        <div>
+          <span>Hello welcome to Snake Wars. Click </span>
+          <Link to="/game">this</Link>
+          <span> to start.</span>
+        </div>
+        <div>
+          <input onInput={this.setPlayerName} ref="playerName"/>
+        </div>
       </div>
     );
   }

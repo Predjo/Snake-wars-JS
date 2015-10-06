@@ -13,26 +13,37 @@ class ObjectManager {
       instance = this;
       this.defineEvents();
     }    
-    this.players = [];
-    this.collectibles = [];
-    this.bullets = [];
+    this.setDefaults();
 
     return instance;
+  }
+
+  setDefaults() {
+    this.players = [];
+    this.collectibles = [];
+    this.bullets = [];    
   }
 
   defineEvents() {
     EventManager.on(Events.playerAdded, (player) => {
       this.registerPlayer(player);
     });
+
     EventManager.on(Events.playerRemoved, (player) => {
       this.unRegisterPlayer(player);
     });
+
     EventManager.on(Events.collectibleAdded, (collectible) => {
       this.registerCollectable(collectible);
     });
+
     EventManager.on(Events.collectibleDestroyed, (collectible) => {
       this.unRegisterCollectable(collectible);
-    });      
+    });
+
+    EventManager.on(Events.resetAll, () => {
+      this.setDefaults();
+    });       
   }
 
   registerCollectable (collectable) {

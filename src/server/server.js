@@ -47,8 +47,8 @@ app.get('/', (req, res, next) => {
   feRoute(req, res, next);
 });
 
-app.get('/game', (req, res, next) => {  
-  feRoute(req, res, next);
+app.get('/game', (req, res) => {  
+  res.redirect('/');
 });
 
 

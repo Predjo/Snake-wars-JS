@@ -16,10 +16,15 @@ class CollectibleManager {
       instance = this;
       this.defineEvents();
     }   
-    this.collectibles = [];
+    
+    this.setDefaults();
     this.defineGrid(700, 700);
 
     return instance; 
+  }
+
+  setDefaults() {
+    this.collectibles = [];
   }
 
   defineEvents() {
@@ -42,6 +47,10 @@ class CollectibleManager {
         this.addCollectible(new Collectible(item.type, item.x, item.y, Grid.fieldSize / 2, item.color));
       });
     });
+
+    EventManager.on(Events.resetAll, () => {
+      this.setDefaults();
+    });    
   }
 
   defineGrid(width, height) {

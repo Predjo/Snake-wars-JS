@@ -47,7 +47,7 @@ gulp.task('shared-js', ['clean:shared-js'], function() {
   taskFunctions.babelJS('./src/shared/**/*.js*','./dist/shared/');
 });
 
-gulp.task('js', ['client-js', 'shared-js', 'server-js']);
+gulp.task('js', ['client-js', 'server-js']);
 
 gulp.task('templates', function() {
   taskFunctions.copy('./src/views/**/*.handlebars', 'dist/views/');

@@ -50,6 +50,7 @@ class ServerManager {
       });          
 
       socket.on('updatePlayers', (data) => {
+        console.log('updatePlayers', data);
         this.playerManager.updateAllPlayerStates(data);
       });
 
