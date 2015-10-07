@@ -20,7 +20,7 @@ class Canvas extends Component {
     this.state = {}
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     this._resizeCanvas();
     window.addEventListener('resize', this._resizeCanvas, false);
   }

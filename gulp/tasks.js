@@ -12,6 +12,7 @@ var babel       = require('gulp-babel');
 var browserify  = require('browserify');
 var eslint      = require('gulp-eslint');
 var browserSync = require('browser-sync');
+var sourcemaps  = require('gulp-sourcemaps');
 
 var exports = {
 
@@ -31,9 +32,11 @@ var exports = {
     .pipe(gulp.dest(destinationPath));
   },
 
-  babelJS: function(sourcePath, destinationPath) {
+  babelJS: function(sourcePath, destinationPath, sourceMaps) {
     return gulp.src(sourcePath)
+        .pipe(sourcemaps.init())
         .pipe(babel({ optional: ['es7.classProperties', 'es7.decorators'] }))
+        //.pipe(sourcemaps.write('.', { sourceRoot: sourceMaps }))        
         .pipe(gulp.dest(destinationPath));
   },
 

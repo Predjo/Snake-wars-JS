@@ -35,26 +35,26 @@ gulp.task('eslint', function() {
   taskFunctions.eslint('./src/**/*.js*');
 });
 
-gulp.task('client-js', ['clean:client-js'], function() {
+gulp.task('client-js', [], function() {
   taskFunctions.buildJS(['./src/client/app.js'], './app.js', './dist/public/js/');
 });
 
-gulp.task('server-js', ['clean:server-js', 'templates'], function() {
+gulp.task('server-js', ['templates'], function() {
   taskFunctions.babelJS('./src/server/**/*.js*','./dist/server/');
 });
 
-gulp.task('shared-js', ['clean:shared-js'], function() {
+gulp.task('shared-js', [], function() {
   taskFunctions.babelJS('./src/shared/**/*.js*','./dist/shared/');
 });
 
-gulp.task('js', ['client-js', 'server-js']);
+gulp.task('js', ['clean:client-js', 'clean:server-js', 'clean:shared-js', 'shared-js', 'client-js', 'server-js']);
 
 gulp.task('templates', function() {
   taskFunctions.copy('./src/views/**/*.handlebars', 'dist/views/');
 });
 
 gulp.task('watch', ['build'], function(){
-  /*var bundler = taskFunctions.watchifyBundle(['./src/client/app.js']);
+  var bundler = taskFunctions.watchifyBundle(['./src/client/app.js']);
 
   function rebundle() {
     var t = Date.now();
@@ -67,9 +67,9 @@ gulp.task('watch', ['build'], function(){
     });
   }
 
-  bundler.on('update', rebundle);*/
-  gulp.watch('./src/client/**/*.js*', ['eslint', 'client-js']);
-  gulp.watch('./src/shared/**/*.js*', ['eslint', 'client-js', 'shared-js']);
+  bundler.on('update', rebundle);
+  gulp.watch('./src/client/**/*.js*', ['eslint']);
+  gulp.watch('./src/shared/**/*.js*', ['eslint', 'shared-js', 'server-js']);
   gulp.watch('./src/server/**/*.js*', ['eslint', 'server-js']);
   gulp.watch('./src/client/**/*.scss', ['sass']);
 
