@@ -144,6 +144,11 @@ class Player extends BaseObject{
     }
   }
 
+  getHeadSpecs() {
+    const firstSegmet = _.first(this.segments);
+    return firstSegmet && firstSegmet.getSpecs();
+  }
+
   getState() {
     return {
       uid: this.uid,

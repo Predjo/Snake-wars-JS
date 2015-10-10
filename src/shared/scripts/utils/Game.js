@@ -1,6 +1,6 @@
 'use strict';
 
-import CanvasUtils                from './CanvasUtils';
+import CanvasManger               from './managers/CanvasManager';
 import Stats                      from './Stats';
 import KeyBinds                   from './KeyBinds';
 import {controls as Control}      from '../constants/Config';
@@ -24,6 +24,7 @@ class Game {
   init(ctx) {
     this.state.ctx = ctx;
     this.stats = new Stats();
+    this.canvasManger = new CanvasManger(ctx);
     this.objectManager = new ObjectManager();
     this.playerManager = new PlayerManager();
     this.collectibleManager = new CollectibleManager();
@@ -65,15 +66,17 @@ class Game {
 
   update(timestamp) {
     this.stats.logFrame(timestamp);
+    const currentPlayer = this.playerManager.getCurrentPlayer();
+    this.canvasManger.updatePlayerWindow(currentPlayer && currentPlayer.getHeadSpecs());
     //this.playerManager.updatePlayers(timestamp);
     //this.collectibleManager.updateCollectibles(timestamp);
     //this.objectManager.detectCollisions();
   }
 
   render() {
-    CanvasUtils.paintBackground(this.state.ctx, 'black', 'white');
-    CanvasUtils.paintPlayers(this.state.ctx, this.playerManager.getPlayers());
-    CanvasUtils.paintCollectibles(this.state.ctx, this.collectibleManager.getCollectibles());
+    this.canvasManger.paintBackground('black', 'white');
+    this.canvasManger.paintPlayers(this.playerManager.getPlayers());
+    this.canvasManger.paintCollectibles(this.collectibleManager.getCollectibles());
   }
 
   getStats() {

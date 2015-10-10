@@ -11,11 +11,13 @@ const Config = {
   },
 
   grid: {
-    fieldSize: 14
+    fieldSize: 14,
+    sizeX: 100,
+    sizeY: 100
   },
 
   collectible: {
-    limit: 1,
+    limit: 10,
     type: {
       segmentPlus : {
         name : 'segmentPlus',

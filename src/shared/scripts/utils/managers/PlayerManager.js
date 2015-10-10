@@ -20,6 +20,7 @@ class PlayerManager {
 
     this.setDefaults();
     this.serverManager = new ServerManager();
+    this.currentPlayer = null;
 
     return instance;
   }
@@ -89,6 +90,7 @@ class PlayerManager {
 
   createCurrentPlayer(uid, state) {
     let player = this.createPlayer(uid, state);
+    this.setCurrentPlayer(player);    
     this.defineControls(player);
     return player;
   }
@@ -98,6 +100,14 @@ class PlayerManager {
     player.update(state);
     this.addPlayer(player);
     return player;   
+  }
+
+  setCurrentPlayer(player) {
+    this.currentPlayer = player;
+  }
+
+  getCurrentPlayer() {
+    return this.currentPlayer;
   }
 
   defineControls(player) {

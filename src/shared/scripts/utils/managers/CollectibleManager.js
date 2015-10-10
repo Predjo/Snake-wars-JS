@@ -18,7 +18,7 @@ class CollectibleManager {
     }   
     
     this.setDefaults();
-    this.defineGrid(700, 700);
+    this.defineGrid();
 
     return instance; 
   }
@@ -34,11 +34,6 @@ class CollectibleManager {
 
     EventManager.on(Events.collectibleCreated, (collectible) => {
       this.addCollectible(collectible);
-    });  
-
-    EventManager.on(Events.windowResized, (data) => {
-      this.playField = data;
-      this.defineGrid(data.width, data.height);
     });
 
     EventManager.on(Events.updateCollectables, (data) => {
@@ -53,11 +48,13 @@ class CollectibleManager {
     });    
   }
 
-  defineGrid(width, height) {
+  defineGrid() {
+    const width = Grid.sizeX * Grid.fieldSize;
+    const height = Grid.sizeY * Grid.fieldSize;
     this.playField = {width, height,
-      xFields: Math.floor(width / Grid.fieldSize), 
-      yFields: Math.floor(height / Grid.fieldSize)
-    } 
+      xFields: Grid.sizeX, 
+      yFields: Grid.sizeY
+    }
   }
 
   createNewCollectible() {
