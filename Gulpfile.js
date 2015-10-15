@@ -68,8 +68,8 @@ gulp.task('watch', ['build'], function(){
   }
 
   bundler.on('update', rebundle);
-  gulp.watch('./src/client/**/*.js*', ['eslint']);
-  gulp.watch('./src/shared/**/*.js*', ['eslint', 'shared-js', 'server-js']);
+  gulp.watch('./src/client/**/*.js*', ['eslint', 'client-js']);
+  gulp.watch('./src/shared/**/*.js*', ['eslint', 'shared-js', 'client-js', 'server-js']);
   gulp.watch('./src/server/**/*.js*', ['eslint', 'server-js']);
   gulp.watch('./src/client/**/*.scss', ['sass']);
 

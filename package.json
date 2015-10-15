@@ -4,7 +4,7 @@
   "description": "Legendary game Kurve in HTML5 with online multiplayer",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon dist/server/server",
+    "server": "nodemon --delay 1.2 dist/server/server",
     "start": "gulp js && npm run server"
   },
   "author": "Nikola Predovan",

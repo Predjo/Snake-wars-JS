@@ -35,7 +35,7 @@ class Player extends BaseObject{
     let segment = new Segment();
     
     if (_.isEmpty(this.segments)) {
-      segment.setPosition(0, 0);
+      segment.setPosition(140, 140);
       segment.setHead();
     } else {
       let lastSegment = _.last(this.segments);

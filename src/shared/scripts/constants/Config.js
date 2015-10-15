@@ -12,7 +12,7 @@ const Config = {
 
   grid: {
     fieldSize: 14,
-    sizeX: 100,
+    sizeX: 200,
     sizeY: 100
   },
 

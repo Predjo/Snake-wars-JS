@@ -75,6 +75,7 @@ class Game {
 
   render() {
     this.canvasManger.paintBackground('black', 'white');
+    this.canvasManger.paintWorld();
     this.canvasManger.paintPlayers(this.playerManager.getPlayers());
     this.canvasManger.paintCollectibles(this.collectibleManager.getCollectibles());
   }
