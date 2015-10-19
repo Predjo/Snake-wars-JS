@@ -12,8 +12,8 @@ class ObjectManager {
     if (!instance) {
       instance = this;
       this.defineEvents();
+      this.setDefaults();
     }    
-    this.setDefaults();
 
     return instance;
   }
@@ -21,7 +21,8 @@ class ObjectManager {
   setDefaults() {
     this.players = [];
     this.collectibles = [];
-    this.bullets = [];    
+    this.bullets = [];
+    this.borders = [];  
   }
 
   defineEvents() {
@@ -41,9 +42,27 @@ class ObjectManager {
       this.unRegisterCollectable(collectible);
     });
 
+    EventManager.on(Events.borderAdded, (border) => {
+      this.registerBorder(border);
+    });
+
+    EventManager.on(Events.borderRemoved, (border) => {
+      this.unRegisterBorder(border);
+    });    
+
     EventManager.on(Events.resetAll, () => {
       this.setDefaults();
     });       
+  }
+
+  registerBorder(border) {
+    this.borders.push(border);
+  }
+
+  unRegisterBorder(border) {
+    _.remove(this.borders, (item) => {
+      return item === border;
+    });
   }
 
   registerCollectable (collectable) {
@@ -71,7 +90,7 @@ class ObjectManager {
   }
 
   getAllGameObjects () {
-    return _.flattenDeep([_.pluck(this.players, 'segments'), this.collectibles, this.bullets]);
+    return _.flattenDeep([_.pluck(this.players, 'segments'), this.borders, this.collectibles, this.bullets]);
   }
 
   detectCollisions() {

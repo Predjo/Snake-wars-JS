@@ -16,18 +16,17 @@ class PlayerManager {
     if (!instance) {
       instance = this;
       this.defineEvents();
+      this.setDefaults();
     }
-
-    this.setDefaults();
-    this.serverManager = new ServerManager();
-    this.currentPlayer = null;
 
     return instance;
   }
 
   setDefaults() {
     this.players = [];
-    this.playerCount = 0;   
+    this.playerCount = 0; 
+    this.serverManager = new ServerManager();
+    this.currentPlayer = null;     
   }
 
   defineEvents() {
@@ -36,10 +35,6 @@ class PlayerManager {
     });
 
     EventManager.on(Events.playerCreated, (player) => {
-      this.addPlayer(player);
-    });
-
-    EventManager.on(Events.currentPlayerCreated, (player) => {
       this.addPlayer(player);
     });
 
@@ -72,14 +67,14 @@ class PlayerManager {
   }
 
   updatePlayerState(uid, state) {
-    let player = this.findPlayerByUid(uid);
+    const player = this.findPlayerByUid(uid);
     if (player) {
       player.update(state);
     }
   }
 
   findPlayerByUid(uid) {
-    return _.find(this.players, (player) => {
+    return _.find(this.players, player => {
       return player.uid === uid;
     });
   }
@@ -89,14 +84,14 @@ class PlayerManager {
   }  
 
   createCurrentPlayer(uid, state) {
-    let player = this.createPlayer(uid, state);
+    const player = this.createPlayer(uid, state);
     this.setCurrentPlayer(player);    
     this.defineControls(player);
     return player;
   }
 
   createPlayer(uid, state) {
-    let player = this.createNewPlayer(uid, state.name, state.color);
+    const player = this.createNewPlayer(uid, state.name, state.color);
     player.update(state);
     this.addPlayer(player);
     return player;   
@@ -111,16 +106,16 @@ class PlayerManager {
   }
 
   defineControls(player) {
-    let socket = this.serverManager.getSocket();
     this.keyBinds = new KeyBinds();
-    this.keyBinds.on(Control.moveUp, () => { this._movePlayer(player, Direction.up, socket); });
-    this.keyBinds.on(Control.moveLeft, () => { this._movePlayer(player, Direction.left, socket); });
-    this.keyBinds.on(Control.moveRight, () => { this._movePlayer(player, Direction.right, socket); });
-    this.keyBinds.on(Control.moveDown, () => { this._movePlayer(player, Direction.down, socket); });
+    this.keyBinds.on(Control.moveUp, () => { this._movePlayer(player, Direction.up); });
+    this.keyBinds.on(Control.moveLeft, () => { this._movePlayer(player, Direction.left); });
+    this.keyBinds.on(Control.moveRight, () => { this._movePlayer(player, Direction.right); });
+    this.keyBinds.on(Control.moveDown, () => { this._movePlayer(player, Direction.down); });
     this.keyBinds.on(84, () => {player.addSegment()});
   }
 
-  _movePlayer(player, direction, socket) {
+  _movePlayer(player, direction) {
+    const socket = this.serverManager.getSocket();
     player.setDirection(direction);
     socket.emit('playerMove', {uid: player.uid, direction: direction});
   }

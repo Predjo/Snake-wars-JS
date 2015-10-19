@@ -22,12 +22,17 @@ const Config = {
       segmentPlus : {
         name : 'segmentPlus',
         color : 'green',
-        chance : 0.75
+        chance : 0.70
       },
       speedPlus   : {
         name : 'speedPlus',
         color : 'red',
-        chance : 0.25
+        chance : 0.15
+      },
+      speedMinus : {
+        name : 'speedMinus',
+        color : 'orange',
+        chance : 0.15
       }
     }
   },
@@ -53,7 +58,8 @@ const Config = {
       generic       : null,
       playerSegment : null,
       collectible   : null,
-      bullet        : null
+      bullet        : null,
+      border        : null
     }),
 
     movementType: {
@@ -74,7 +80,11 @@ const Config = {
     collectibleAdded       : null,
     windowResized          : null,
     updateCollectables     : null,
-    updatePlayers          : null
+    updatePlayers          : null,
+    borderAdded            : null,
+    borderRemoved          : null,
+    borderDestroyed        : null,
+    borderCreated          : null,
   })
 }
 

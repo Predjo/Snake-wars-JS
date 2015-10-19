@@ -17,6 +17,7 @@ class ServerManager {
       this.playerManager = new PlayerManager();
       this.collectibleManager = new CollectibleManager();
       this.defineEvents();
+      this.uid = null;
     }
     return instance;
   }
@@ -33,6 +34,7 @@ class ServerManager {
 
       socket.on('currentPlayerCreate', (data) => {
         let {uid} = data;
+        this.uid = uid;
         console.log('Current Player Created', data);
         this.playerManager.createCurrentPlayer(uid, data);
       });
@@ -47,6 +49,12 @@ class ServerManager {
         let {uid} = data;
         console.log('Player Destroyed', data);
         this.playerManager.removePlayer(uid, data);
+        if (uid === this.uid) {
+          const confirm = window.confirm('You have been destroyed. Restart?');
+          if (confirm) {
+            window.location = '/';
+          }
+        }
       });          
 
       socket.on('updatePlayers', (data) => {

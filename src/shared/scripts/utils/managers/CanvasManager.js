@@ -76,15 +76,9 @@ class CanvasManager {
     }    
   }
 
-  paintLine(x1, y1, x2, y2, width, color) {
-    const padding = Grid.fieldSize / 2;
-    this.ctx.beginPath();
-    this.ctx.moveTo(x1 + padding, y1 + padding);
-    this.ctx.lineTo(x2 + padding, y2 + padding);
-    this.ctx.stroke();
-    this.ctx.lineWidth = width || 21;
-    this.ctx.strokeStyle = color ||'white';
-    this.ctx.stroke();
+  paintBorder(border) {
+    const {x, y, height, width, color} = border; 
+    this.paintCell(x, y, width, height, color);
   }  
 
   paintBackground(color, stroke){
@@ -111,36 +105,21 @@ class CanvasManager {
   }
 
   paintPlayers(players) {
-    _.each(players, (player) => {
+    _.each(players, player => {
       this.paintPlayer(player);
     });
   }
 
   paintCollectibles(collectibles) {
-    _.each(collectibles, (collectible) => {
+    _.each(collectibles, collectible => {
       this.paintCollectible(collectible);
     });    
   }
 
-  paintWorld() {
-    const x = Math.min(Grid.fieldSize * Grid.sizeX - this.playerWindow.x, window.innerWidth);
-    const y = Math.min(Grid.fieldSize * Grid.sizeY - this.playerWindow.y, window.innerHeight);
-
-    if (this.playerWindow.x === 0) {
-      this.paintLine(0, 0, 0, Math.min(this.playerWindow.y + window.innerHeight, Grid.fieldSize * Grid.sizeY), Grid.fieldSize + 1);
-    }
-
-    if (this.playerWindow.y === 0) {
-      this.paintLine(0, 0, Math.min(this.playerWindow.x + window.innerWidth, Grid.fieldSize * Grid.sizeX), 0, Grid.fieldSize + 1);
-    }
-
-    if(this.playerWindow.x + window.innerWidth >= Grid.fieldSize * Grid.sizeX + 1) {
-      this.paintLine(x, 0, x, y, 10, Grid.fieldSize)
-    } 
-
-    if(this.playerWindow.y + window.innerHeight >= Grid.fieldSize * Grid.sizeY + 1) {
-      this.paintLine(0, y, x, y, Grid.fieldSize);
-    }     
+  paintWorld(borders) {
+    _.each(borders, border => {
+      this.paintBorder(border);
+    });
   }
 }
 

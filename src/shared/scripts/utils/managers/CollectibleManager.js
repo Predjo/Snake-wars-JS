@@ -9,17 +9,14 @@ import Collectible             from '../objects/Collectible';
 
 let instance = null;
 
-
 class CollectibleManager {
   constructor(){
     if (!instance) {
       instance = this;
       this.defineEvents();
+      this.setDefaults();
     }   
     
-    this.setDefaults();
-    this.defineGrid();
-
     return instance; 
   }
 
@@ -48,17 +45,8 @@ class CollectibleManager {
     });    
   }
 
-  defineGrid() {
-    const width = Grid.sizeX * Grid.fieldSize;
-    const height = Grid.sizeY * Grid.fieldSize;
-    this.playField = {width, height,
-      xFields: Grid.sizeX, 
-      yFields: Grid.sizeY
-    }
-  }
-
   createNewCollectible() {
-    let num = _.random(1, true);
+    const num = _.random(1, true);
     let type = null;
     let lastChance = 0;
     _.each(Config.type, (item) => {
@@ -67,18 +55,18 @@ class CollectibleManager {
       }
       lastChance += item.chance;
     });
-    let x = _.random(this.playField.xFields) * Grid.fieldSize;
-    let y = _.random(this.playField.yFields) * Grid.fieldSize;
-    let r = Grid.fieldSize / 2;
-    let color = type.color;
+    const x = _.random(Grid.sizeX) * Grid.fieldSize;
+    const y = _.random(Grid.sizeY) * Grid.fieldSize;
+    const r = Grid.fieldSize / 2;
+    const color = type.color;
     return new Collectible(type.name, x, y, r, color);
   }
 
   createCollectible(state) {
-    let r = Grid.fieldSize / 2;
-    let {type, x, y, id} = state;
-    let color = Config.type[type].color;
-    let collectible = new Collectible(type, x, y, r, color);
+    const r = Grid.fieldSize / 2;
+    const {type, x, y, id} = state;
+    const color = Config.type[type].color;
+    const collectible = new Collectible(type, x, y, r, color);
     collectible.id = id;
     this.addCollectible(collectible);
     return collectible;
@@ -97,7 +85,7 @@ class CollectibleManager {
 
   updateCollectibles() {
     if (this.collectibles.length < Config.limit) {
-      let collectible = this.createNewCollectible();
+      const collectible = this.createNewCollectible();
       this.addCollectible(collectible);
     }
   }

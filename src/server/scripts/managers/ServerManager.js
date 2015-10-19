@@ -4,6 +4,7 @@ import ObjectManager      from '../../../shared/scripts/utils/managers/ObjectMan
 import PlayerManager      from '../../../shared/scripts/utils/managers/PlayerManager';
 import EventManager       from '../../../shared/scripts/utils/managers/EventManager';
 import CollectibleManager from '../../../shared/scripts/utils/managers/CollectibleManager';
+import GridManager        from '../../../shared/scripts/utils/managers/GridManager';
 import ClientManager      from './ClientManager';
 
 class ServerManager {
@@ -15,6 +16,8 @@ class ServerManager {
     this.playerManager      = new PlayerManager();
     this.eventManager       = new EventManager();
     this.collectibleManager = new CollectibleManager();
+    this.gridManager        = new GridManager();
+    this.gridManager.createDefaultBorders();
   }
 
   listen() {

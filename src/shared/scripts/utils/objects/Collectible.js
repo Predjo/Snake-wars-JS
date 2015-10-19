@@ -20,7 +20,7 @@ class Collectible extends GameObject{
   }
 
   onCollision(collision) {
-    if (collision.src.type === ObjectConfig.type.playerSegment) {
+    if (collision.src.type === ObjectConfig.type.playerSegment && collision.dest.type === ObjectConfig.type.collectible) {
       let player = collision.src.getParent();
       this.applyPlayerEffect(player);
       EventManager.trigger(Events.collectibleDestroyed, this);
@@ -35,6 +35,9 @@ class Collectible extends GameObject{
     case Config.type.speedPlus.name:
       player.setSpeed(player.getSpeed() + 1);
       break;
+    case Config.type.speedMinus.name:
+      player.setSpeed(player.getSpeed() - 1);
+      break;      
     default:
       console.error('Undefined collectible type');
     }
@@ -46,6 +49,8 @@ class Collectible extends GameObject{
       y      : this.position.y,
       color  : this.color,
       radius : this.radius,
+      height : this.radius * 2,
+      width  : this.radius * 2,
       type   : this.collectibleType,
       id     : this.id
     }

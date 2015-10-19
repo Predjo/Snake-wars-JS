@@ -1,7 +1,6 @@
 'use strict';
 
-import {events as Events} from '../constants/Config';
-import EventManager       from './managers/EventManager';
+import PlayerManager      from './managers/PlayerManager';
 
 
 class Stats {
@@ -13,14 +12,7 @@ class Stats {
     this.updateCallBack = null;
     this.deltaTime = 0;
     this.player = null;
-
-    this.defineEvents();
-  }
-
-  defineEvents() {
-    EventManager.on(Events.currentPlayerCreated, (player) => {
-      //this.trackPlayer(player);
-    });
+    this.playerManager = new PlayerManager();
   }
 
   logFrame(timeStamp){
@@ -36,12 +28,8 @@ class Stats {
     }
   }
 
-  trackPlayer(player) {
-    this.player = player
-  }
-
   getPlayer() {
-    return this.player;
+    return this.playerManager.getCurrentPlayer();
   }
 
   getFPS(){

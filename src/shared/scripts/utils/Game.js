@@ -9,6 +9,7 @@ import ObjectManager              from './managers/ObjectManager';
 import PlayerManager              from './managers/PlayerManager';
 import EventManager               from './managers/EventManager';
 import CollectibleManager         from './managers/CollectibleManager';
+import GridManager                from './managers/GridManager';
 import ServerManager              from './managers/ServerManager';
 
 class Game {
@@ -22,14 +23,16 @@ class Game {
   }
 
   init(ctx) {
-    this.state.ctx = ctx;
-    this.stats = new Stats();
-    this.canvasManger = new CanvasManger(ctx);
-    this.objectManager = new ObjectManager();
-    this.playerManager = new PlayerManager();
+    this.state.ctx          = ctx;
+    this.stats              = new Stats();
+    this.canvasManger       = new CanvasManger(ctx);
+    this.objectManager      = new ObjectManager();
+    this.playerManager      = new PlayerManager();
     this.collectibleManager = new CollectibleManager();
-    this.serverManager = new ServerManager();
+    this.gridManager        = new GridManager();
+    this.serverManager      = new ServerManager();
     this.serverManager.connect();
+    this.gridManager.createDefaultBorders();
     this.defineControls();
     this.defineEvents();
   }
@@ -75,7 +78,7 @@ class Game {
 
   render() {
     this.canvasManger.paintBackground('black', 'white');
-    this.canvasManger.paintWorld();
+    this.canvasManger.paintWorld(this.gridManager.getSpecs());
     this.canvasManger.paintPlayers(this.playerManager.getPlayers());
     this.canvasManger.paintCollectibles(this.collectibleManager.getCollectibles());
   }

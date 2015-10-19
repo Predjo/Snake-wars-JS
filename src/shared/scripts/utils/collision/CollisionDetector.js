@@ -8,17 +8,18 @@ class CollisionDetector {
   constructor() {}
 
   static checkObjectCollision(firstObject, secondObject) {
-    let {x: x1, y: y1} = firstObject.getSpecs();
-    let {x: x2, y: y2} = secondObject.getSpecs();
+    let {x: x1, y: y1, width: w1, height: h1} = firstObject.getSpecs();
+    let {x: x2, y: y2, width: w2, height: h2} = secondObject.getSpecs();
 
     if(firstObject.collisionDisabled || secondObject.collisionDisabled) {
       return false;
     }
 
-    if(x1 === x2 && y1 === y2) {
-      return true;
-    } else {
+    if(x1 >= x2 + w2 || x2 >= x1 + w1 || y1 >= y2 + h2 || y2 >= y1 + h1) {
       return false;
+    } else {
+      console.log('COLISION');
+      return true;
     }
   }
 
@@ -30,10 +31,6 @@ class CollisionDetector {
     if(_.isFunction(secondObject.onCollision)) {
       secondObject.onCollision(collision);
     } 
-  }
-
-  static checkWorldCollision() {
-    return false;
   }
 
   static detectCollisions(gameObjects) {
